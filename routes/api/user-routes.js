@@ -58,8 +58,33 @@ router.post('/', (req, res) => {
 
 });
 
-//POST  /api/users/1
-router.post('/:id', (req, res) => {
+//POST  /api/users/login
+router.post('/login', (req, res) => {
+    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+
+    User
+    .findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    .then (dbUserData => {
+        if (!dbUserData)
+        {
+            res.status(404).json({message : 'No user with the given email id'});
+            return;
+        }
+
+        //res.json({user : dbUserData});
+
+        //verify the user
+        const validPassword = dbUserData.checkPassword(req.body.password); //passing the value to the objects method
+        if(!validPassword)
+        {
+            res.status(404).json({message: 'Incorrect password!'});
+            return;
+        }
+    })
 
 });
 
