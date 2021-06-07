@@ -34,7 +34,7 @@ Post.init(
     },
     //define configurations
     {
-        sequelize : true, 
+        sequelize, 
         freezeTableName : true,
         underscored : true,
         modelName: 'post'
